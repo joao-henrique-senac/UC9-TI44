@@ -25,7 +25,6 @@ const input = require("../input");
      
      console.log("QUal o valor do valorbatatapalha?")
      let valorbatatapalha = Number(await input());
-
     
 
 
