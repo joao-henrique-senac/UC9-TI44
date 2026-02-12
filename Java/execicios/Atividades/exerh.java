@@ -1,5 +1,7 @@
 package execicios.Atividades;
 
+import java.util.Scanner;
+
 public class exerh {
 //     Gerenciador de Maratona de Filmes 
 // (avaliação observável) 
@@ -57,5 +59,73 @@ public class exerh {
 // Validação: Planejamento válido? true 
 // ========================================
 
+    // Parte 1: Método para exibir cabeçalho
+    public static void exibirCabecalho() {
+        System.out.println("========================================");
+        System.out.printf("GERENCIADOR DE MARATONA DE FILMES\n");
+        System.out.println("========================================");
+    }
 
+    // Parte 2 e 3: Método para calcular tempo total
+    public static double calcularTempoTotal(int filmes, double duracaoMedia) {
+        return filmes * duracaoMedia;
+    }
+
+    // Parte 3: Método para classificar maratona
+    public static String classificarMaratona(double horas) {
+        if (horas <= 4) {
+            return "Maratona Leve";
+        } else if (horas <= 8) {
+            return "Maratona Moderada";
+        } else {
+            return "Maratona Épica!";
+        }
+    }
+
+    // Parte 4: Método para validar quantidade de filmes
+    public static boolean isValida(int filmes) {
+        return filmes > 0;
+    }
+
+    // Parte 5: Método main com integração completa
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Exibir cabeçalho
+        exibirCabecalho();
+
+        // Entrada de dados do usuário
+        System.out.println("\nDigite as informações da maratona:");
+        System.out.print("Nome do usuário: ");
+        String nomeUsuario = scanner.nextLine();
+
+        System.out.print("Quantidade de filmes: ");
+        int quantidadeFilmes = scanner.nextInt();
+
+        System.out.print("Duração média por filme (em horas): ");
+        double duracaoMedia = scanner.nextDouble();
+
+        // Exibir informações da maratona
+        System.out.println("\n--- Informações da Maratona ---");
+        System.out.println("Usuário: " + nomeUsuario);
+        System.out.println("Filmes planejados: " + quantidadeFilmes);
+        System.out.println("Duração média por filme: " + duracaoMedia + " horas");
+
+        // Cálculos
+        System.out.println("\n--- Cálculos ---");
+        double tempoTotal = calcularTempoTotal(quantidadeFilmes, duracaoMedia);
+        System.out.println("Tempo total: " + tempoTotal + " horas");
+
+        // Classificação
+        String classificacao = classificarMaratona(tempoTotal);
+        System.out.println("Classificação: " + classificacao);
+
+        // Validação
+        boolean valido = isValida(quantidadeFilmes);
+        System.out.println("Validação: Planejamento válido? " + valido);
+
+        System.out.println("========================================");
+
+        scanner.close();
+    }
 }
