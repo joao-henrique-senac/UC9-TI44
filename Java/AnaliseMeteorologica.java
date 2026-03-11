@@ -11,11 +11,11 @@ static double[][] temperaturas = {
 //Como já foi dito na linha 3, isso é um introdução de dados para o programa rodar (variaveis)
 // int[Manhã][Tarde][Noite]= Matriz de números inteiros com 2 dimensões (linhas e colunas)
     static int[][] umidades = {
-            {85, 60, 75},
-            {78, 55, 70},
-            {90, 65, 80},
-            {82, 58, 72},
-            {75, 50, 68}
+            {85, 60, 75}, // cidade 1
+            {78, 55, 70}, // cidade 2
+            {90, 65, 80}, // cidade 3
+            {82, 58, 72}, // cidade 4
+            {75, 50, 68}  // cidade 5
     };
 
     // ==============================
@@ -65,6 +65,9 @@ static double[][] temperaturas = {
     // Esse é o metodo para indetificar com a maior amplitude termica,
     // ou seja a diferença entre a temperatura máxima e mínima, para cada cidade, e retornar
     // o indice da cidade com a maior amplitude
+    // Ele vai passar por todas as cidades, Calculando a amplitude termica de cada uma, ele guarda 
+    // a maior encontrada e retorna o indice da cidade com maior diferencia de temperatura  
+
 
     public static int identificarCidadeComMaiorAmplitudeTermica() {
         double maiorAmplitude = 0;
@@ -79,19 +82,20 @@ static double[][] temperaturas = {
         }
         return indice;
     }
-
+    // Esse metodo calcula o índice de calor ele usa temperatura (temp) e umidade (umidade) 
+    // para calcular a sensação termica 
     public static double calcularIndiceCalor(double temp, double umidade) {
         double indice = temp + 0.5 * (umidade / 100.0) * (temp - 20);
         return Math.round(indice * 10.0) / 10.0;
     }
+    // esse metodo vai gerar um alerta para a cidade com o menor nivel de umidade 
+    public static int gerarAlertas(int cidade) {
 
-    public static int gerarAlertas(int cidadeIndex) {
+        double tempMax = temperaturas[cidade][0]; // significa temperatura máxima.
+        double tempMin = temperaturas[cidade][1]; // significa temperatura mínima.
+        double variacao = tempMax - tempMin; // diferença entre máxima e mínima
 
-        double tempMax = temperaturas[cidadeIndex][0];
-        double tempMin = temperaturas[cidadeIndex][1];
-        double variacao = tempMax - tempMin;
-
-        double umidadeMedia = calcularMediaUmidade(cidadeIndex);
+        double umidadeMedia = calcularMediaUmidade(cidade);
 
         if (tempMax > 35 || umidadeMedia > 90) {
             return 2; // VERMELHO
@@ -105,50 +109,42 @@ static double[][] temperaturas = {
 
     public static double[] calcularEstatisticasAvancadas() {
 
-        double soma = 0;
-        double maior = temperaturas[0][0];
-        double menor = temperaturas[0][1];
-        int total = 0;
+    double soma = 0; //Ela vai guardar a soma de todas as temperaturas.
+    double maior = temperaturas[0][0]; // Aqui ele assume que essa é a maior por enquanto.
+    double menor = temperaturas[0][1]; // Aqui ele assume que é a menor temperatura por enquanto.
+    int total = 0; //Essa variável vai contar quantas temperaturas existem.
 
-        for (int i = 0; i < temperaturas.length; i++) {
-            for (int j = 0; j < 2; j++) {
-                soma += temperaturas[i][j];
-                if (temperaturas[i][j] > maior)
-                    maior = temperaturas[i][j];
-                if (temperaturas[i][j] < menor)
-                    menor = temperaturas[i][j];
-                total++;
-            }
+    for (int i = 0; i < temperaturas.length; i++) {
+
+        double max = temperaturas[i][0];
+        double min = temperaturas[i][1];
+
+        soma = soma + max;
+        soma = soma + min; // Ele vai somando todas as temperaturas.
+
+        if (max > maior) {
+            maior = max;
         }
 
-        double media = soma / total;
-
-        // Desvio padrão simples
-        double somaQuadrado = 0;
-        for (int i = 0; i < temperaturas.length; i++) {
-            for (int j = 0; j < 2; j++) {
-                somaQuadrado += Math.pow(temperaturas[i][j] - media, 2);
-            }
+        if (min < menor) {
+            menor = min;
         }
 
-        double desvio = Math.sqrt(somaQuadrado / total);
+        if (min > maior) {
+            maior = min;
+        }
 
-        return new double[]{media, maior, menor, desvio};
+        if (max < menor) {
+            menor = max;
+        }
+
+        total += 2;
     }
 
-    public static String compararCidades(int c1, int c2) {
+    double media = soma / total;
 
-        double temp1 = temperaturas[c1][0];
-        double temp2 = temperaturas[c2][0];
-
-        if (temp1 > temp2) {
-            return "Cidade #" + (c1 + 1) + " é mais quente que #" + (c2 + 1);
-        } else if (temp2 > temp1) {
-            return "Cidade #" + (c2 + 1) + " é mais quente que #" + (c1 + 1);
-        } else {
-            return "Cidades possuem mesma temperatura máxima";
-        }
-    }
+    return new double[]{media, maior, menor};
+}
 
     // ==============================
     // MÉTODOS AUXILIARES
