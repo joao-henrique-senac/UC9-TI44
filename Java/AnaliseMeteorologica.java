@@ -1,5 +1,5 @@
 public class AnaliseMeteorologica {
-// Isso é o inicio do programa, oque significa que a classe se chama AnaliseMeteorologica, e é a classe principal do programa
+// Isso é o inicio do programa, o que significa que a classe se chama AnaliseMeteorologica, e é a classe principal do programa
 // double[Máxima][Mínima]= Matriz de números decimais com 2 dimensões (linhas e colunas)
 static double[][] temperaturas = {
             {32.5, 22.1},  // Cidade 1 
@@ -138,29 +138,33 @@ static double[][] temperaturas = {
             menor = max;
         }
 
-        total += 2;
+        total = total + 2;
     }
 
     double media = soma / total;
 
     return new double[]{media, maior, menor};
 }
+public static double calcularMediaUmidade(int cidade) { 
 
-    // ==============================
-    // MÉTODOS AUXILIARES
-    // ==============================
+    double soma = umidades[cidade][0] + umidades[cidade][1] + umidades[cidade][2]; // manhã, tarde, noite
+    double media = soma / 3;
 
-    public static double calcularMediaUmidade(int cidade) {
-        return (umidades[cidade][0] +
-                umidades[cidade][1] +
-                umidades[cidade][2]) / 3.0;
+    return media;
+} 
+
+public static String traduzirAlerta(int codigo) {
+
+    if (codigo == 2) {
+        return "VERMELHO";
     }
 
-    public static String traduzirAlerta(int codigo) {
-        if (codigo == 2) return "VERMELHO";
-        if (codigo == 1) return "AMARELO";
-        return "VERDE";
+    if (codigo == 1) {
+        return "AMARELO";
     }
+
+    return "VERDE";
+}
 
     // ==============================
     // RELATÓRIO FINAL FORMATADO
