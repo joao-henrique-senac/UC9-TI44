@@ -9,9 +9,16 @@ public class MiniBanco {
         System.out.println("4 - ver Extrato ");
         System.out.println("0 - Sair ");
         System.out.print("Escolha: ");
-
-
     }
+
+    static double depositar(double saldo, double valor){
+        return saldo + valor;
+    }
+
+    static void exibirSaldo(double saldo){
+        System.out.printf("Saldo atual: R$ %.2f%n", saldo);
+    }
+
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
 
@@ -29,7 +36,11 @@ public class MiniBanco {
 
         opcao = scanner.nextInt();
         if (opcao == 1 ){
-            System.out.println(" [Depositar - breve] ");
+            //System.out.println(" [Depositar - breve] ");
+            System.out.print("Valor a depositar: R$ ");
+            double valor = scanner.nextDouble();
+            saldo = depositar(saldo, valor);
+            exibirSaldo(saldo);
         }else if (opcao == 2) {
             System.out.println("[Sacar - em breve]");
         }else if (opcao == 3){
