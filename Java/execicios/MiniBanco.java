@@ -8,7 +8,7 @@ public class MiniBanco {
         System.out.println("3 - Consultar Saldo");
         System.out.println("4 - ver Extrato ");
         System.out.println("0 - Sair ");
-        System.out.println("Escolha ");
+        System.out.print("Escolha: ");
 
 
     }
@@ -24,8 +24,28 @@ public class MiniBanco {
     String nome = scanner.next();
     System.out.printf("Olá %s! Saldo inicial: R$ %.2f\n", nome, saldo);
 
-    exibirMenu();
+    while (opcao != 0) {
+        exibirMenu();
 
+        opcao = scanner.nextInt();
+        if (opcao == 1 ){
+            System.out.println(" [Depositar - breve] ");
+        }else if (opcao == 2) {
+            System.out.println("[Sacar - em breve]");
+        }else if (opcao == 3){
+            System.out.println("[Consultar Saldo]");
+        }else if (opcao == 4 ){
+            System.out.println("[Extrato - em breve]");
+        }else if (opcao == 0 ){
+            System.out.println("Até logo "+ nome +"!");
+        }else {
+            System.out.println("Opção Inválida. ");
+        }
+
+        
+    }
+
+    
     scanner.close();
   }   
 }
