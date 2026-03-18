@@ -46,9 +46,31 @@ public class MiniBanco {
     }
 
 
+    static void exibirExtrado(String[]extrato, int totallinhas){
+        System.out.println("\n --Extrato------------");
+        if (totallinhas == 0){
+            System.out.println("Nenhuma movimentação.");
+        }else {
+            for (int i = 0; i < totallinhas; i++){
+                System.out.println(" "+ extrato[i]);
+            }
+        }
+
+        System.out.println("----------------------");
+
+    } 
+
+    static int registrar(String[]extrato, int totallinhas, String linha){
+        extrato[totallinhas] = linha;
+        return totallinhas + 1;
+    }
+
+
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
-
+    //variaveis do extrato 
+    String[] extrato = new String[50];
+    int totallinhas = 0;
     //variaveis principais da conta 
     double saldo    = 0.0;
     int    opcao    = -1; 
@@ -73,6 +95,8 @@ public class MiniBanco {
                 saldo = depositar(saldo, valor);
                 System.out.println("Deposito realizado!");
                 exibirSaldo(saldo);
+                totallinhas = registrar(extrato, totallinhas, String.format("DEPÓSITO 🟩 + %.2f => Saldo R$ %.2f,",valor, saldo ));
+      
                 
             }
 
@@ -89,12 +113,13 @@ public class MiniBanco {
            }else if (!dentroDoLimite(valorSaque)){
             System.out.printf("limite exedido. Maximo: R$ %.2f%n", LIMITE_SAQUE);
            }else if (!saldoSuficiente(saldo, valorSaque)){
-            System.out.printf("Saldo insuficiente. Necessario: R$ %.2f%n" ,calcularTotalSaque(valorSaque));
+            System.out.printf("Saldo insuficiente. Necessario: R$ %.2fn" ,calcularTotalSaque(valorSaque));
 
            }else{
             double taxa = valorSaque * TAXA_SAQUE;
             saldo = sacar(saldo, valorSaque);
             System.out.printf("Saque realizado. Taxa cobrada: R$ %.2f%n", taxa);
+            totallinhas = registrar(extrato, totallinhas, String.format("SAQUE ⭕ -R$ %.2f => Saldo R$ %.2f", valorSaque, saldo  ));
            }
           
          
@@ -102,8 +127,10 @@ public class MiniBanco {
            // System.out.println("[Consultar Saldo]");
             exibirSaldo(saldo);
         }else if (opcao == 4 ){
-            System.out.println("[Extrato - em breve]");
+            //System.out.println("[Extrato - em breve]");
+            exibirExtrado(extrato, totallinhas);
         }else if (opcao == 0 ){
+            exibirExtrado(extrato, totallinhas);
             System.out.println("Até logo "+ nome +"!");
         }else {
             System.out.println("Opção Inválida. ");
